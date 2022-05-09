@@ -7,8 +7,9 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  ARITHEMETIC_MAYHEMFILE: arithmetic.mayhemfile
-  CONSTRUCTORS_MAYHEMFILE: constructors.mayhemfile
+  HASHSET_MAYHEMFILE: hashset.mayhemfile
+  ORDSET_MAYHEMFILE: ordset.mayhemfile
+  VECTOR_MAYHEMFILE: vector.mayhemfile
 
 jobs:
   build:
@@ -47,18 +48,25 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Start analysis for arithmetic
+      - name: Start analysis for hashset
         uses: ForAllSecure/mcode-action@v1
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
-          args: --image ${{ steps.meta.outputs.tags }} --file ${{ env.ARITHEMETIC_MAYHEMFILE }} --duration 300
+          args: --image ${{ steps.meta.outputs.tags }} --file ${{ env.HASHSET_MAYHEMFILE }} --duration 300
           sarif-output: sarif
 
-      - name: Start analysis for constructors
+      - name: Start analysis for ordset
         uses: ForAllSecure/mcode-action@v1
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
-          args: --image ${{ steps.meta.outputs.tags }} --file ${{ env.CONSTRUCTORS_MAYHEMFILE }} --duration 300
+          args: --image ${{ steps.meta.outputs.tags }} --file ${{ env.ORDSET_MAYHEMFILE }} --duration 300
+          sarif-output: sarif
+
+      - name: Start analysis for vector
+        uses: ForAllSecure/mcode-action@v1
+        with:
+          mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
+          args: --image ${{ steps.meta.outputs.tags }} --file ${{ env.VECTOR_MAYHEMFILE }} --duration 300
           sarif-output: sarif
 
       - name: Upload SARIF file(s)
