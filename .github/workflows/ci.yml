@@ -21,7 +21,7 @@ jobs:
           rust-version: ${{ matrix.rust }}
       - name: Install cargo tooling
         run: cargo install cargo-make cargo-script
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v6.0.2
       - name: Prepare distribution folders
         run: cargo make prepare-release
       - name: Run tests
@@ -37,6 +37,6 @@ jobs:
         with:
           rust-version: stable
           components: clippy
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v6.0.2
       - name: Clippy
         run: cargo clippy -- -D warnings
